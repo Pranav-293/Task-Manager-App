@@ -5,9 +5,9 @@ const taskRouter = require("./routes/task_router");
 const session = require("./middleware/session");
 
 
+app.use(express.json());
 app.use(session);
 app.use(taskRouter);
-app.use(express.json());
 
 app.listen(PORT, ()=>{
     console.log(`Task Management service is running on port ${PORT}`);

@@ -10,9 +10,11 @@
   "author": "Pranav Gupta",
   "license": "ISC",
   "dependencies": {
+    "connect-redis": "^7.0.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "connect-redis": "^7.0.1",
-    "redis" :"^4.6.5"
+    "mongoose": "^7.0.4",
+    "redis": "^4.6.5",
+    "uniqid": "^5.4.0"
   }
 }
