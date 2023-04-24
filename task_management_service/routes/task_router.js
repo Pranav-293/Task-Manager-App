@@ -6,7 +6,6 @@ router.get("/temp",(req,res)=>{
     res.send(`${JSON.stringify(req.session)}`);
 });
 
-
 router.use(authenticate);
 
 router.get("/", (req,res)=>{

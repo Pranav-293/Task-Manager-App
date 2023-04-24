@@ -20,7 +20,8 @@ function login(passport) {
                 "status" : "ok",
                 "message": "Authentication Successful",
                 "user": user.id,
-                "session": JSON.parse(JSON.stringify(req.session))
+                "session": JSON.parse(JSON.stringify(req.session)),
+                "sessionId": JSON.stringify(req.session.id)
               }
             );
             //console.log(req.user);
@@ -187,14 +188,14 @@ async function createUser(req,res){
 
 function logOut(req,res){
     try{
-      req.logout(function(err) {
-        if (err) {console.log({"status" : "error", "message" : err.message}); return}
-        res.send({"status":"ok", "message":"logout successfully"});
-      });
-        // req.session.destroy( function ( err ) {
-        //     if(err) throw err;
-        //     res.send( {"status":"ok", "message": 'Successfully logged out' } );
-        // });
+      // req.logout(function(err) {
+      //   if (err) throw err;
+      //   res.send( {"status":"ok", "message": 'Successfully logged out' } );
+      // });
+      req.session.destroy( function( err ) {
+            if(err) throw err;
+            res.send( {"status":"ok", "message": 'Successfully logged out' } );
+     });
     }
     catch (e) {
         console.log(e);
