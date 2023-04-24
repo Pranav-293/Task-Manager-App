@@ -150,6 +150,7 @@ async function createUser(req,res){
               );
             return;
         }
+        const admin = await User.findOne({id:req.session.passport.user});
         const salt = await crypto.randomBytes(16).toString("hex");
         crypto.pbkdf2(
           req.body.password,
@@ -167,10 +168,10 @@ async function createUser(req,res){
               password: hashedPassword.toString("hex"),
               salt: salt,
               level: "User",
-              orgId: req.body.orgId,
-              reporting: req.body.reporting,
-              createdBy: req.body.createdBy,
-              updatedBy: req.body.updatedBy,
+              orgId: admin.orgId,
+              reporting: admin.id,
+              createdBy: admin.id,
+              updatedBy: admin.id,
             });
             newUser.save().then(res.send({"status": "ok", "message":"User Registered"})).catch((e) => res.send({"status":"error", "message":e.message}));
           }
