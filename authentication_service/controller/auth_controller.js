@@ -3,7 +3,18 @@ const uniqid = require("uniqid");
 const crypto = require("crypto");
 const Org = require("../models/organization");
 
-
+function isAuthenticated(req, res){
+  try{
+    if(req.isAuthenticated()){
+      res.send({"status":"ok","data":req.user})
+    }else{
+      res.send({"status":"error","message":"Not Authenticated"})
+    }
+  }
+  catch(e){
+    res.send({"status":"error","message":e.message})
+  }
+}
 
 function login(passport) {
    return function handleLogin(req, res, next) {
@@ -208,6 +219,7 @@ function logOut(req,res){
 }
 
 module.exports = {
+  isAuthenticated,
   login,
   createAdmin,
   createOrg,

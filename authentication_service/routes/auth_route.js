@@ -5,6 +5,8 @@ const authController = require("../controller/auth_controller");
 module.exports = function (passport) {
   const router = express.Router();
 
+  router.get("/isAuthenticated", authController.isAuthenticated);
+
   router.post("/login", authController.login(passport));
 
   // All the routes that come after this middleware are protected,

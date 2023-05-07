@@ -4,7 +4,7 @@ const createClient = redis.createClient;
 
 // Initialize Client
 let redisClient = createClient();
-redisClient.connect().then(console.log("Redis server connected")).catch(console.error);
+redisClient.connect().catch(console.error).then(console.log("Redis server connected"));
 
 //Initialize Store
 let redisStore = new RedisStore({
