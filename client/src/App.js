@@ -1,25 +1,26 @@
-import { useNavigate, Routes, Route } from "react-router-dom";
-import SuperAdminDashboard from "./Components/SuperAdminDashboard";
+import {useNavigate} from "react-router-dom";
 import { useEffect } from "react";
  function App() {
   const navigate = useNavigate();
   useEffect(() => {
      fetch("/isAuthenticated").then(res => {res.json().then(data => {
-      console.log(data);
       if(data.status!=='ok'){
-        navigate("/login"); 
+        navigate("/login");
+      }else{
+        if(data.user.level==="Super Admin"){
+          navigate("/super-admin-dashboard/admins");
+        }else if(data.user.level==="Admin"){
+          navigate("/admin-dashboard");
+        }else{
+          navigate("/user-dashboard");
+        }
       }
      })})
   })
     return (
       <>
         Welcome
-        <Routes>
-          <Route
-            path="/super-admin-dashboard"
-            element={<SuperAdminDashboard />}
-          ></Route>
-        </Routes>
+        Please Wait...
       </>
     );
 }
