@@ -10,7 +10,7 @@ import { useEffect } from "react";
         if(data.user.level==="Super Admin"){
           navigate("/super-admin-dashboard/admins");
         }else if(data.user.level==="Admin"){
-          navigate("/admin-dashboard");
+          navigate("/admin-dashboard/users");
         }else{
           navigate("/user-dashboard");
         }

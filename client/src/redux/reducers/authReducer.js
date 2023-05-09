@@ -1,4 +1,4 @@
-import { SET_USER } from "../actions/ActionTypes";
+import {SET_ORGS_AND_ADMINS, SET_USER } from "../actions/ActionTypes";
 
 const initialState = {
     userId:"",
@@ -7,9 +7,7 @@ const initialState = {
     Role:"",
     Organization:"",
     Supervisor:"",
-    allOrgs:[{
-      name:"Paymentus",
-    }],
+    allOrgs:[],
     allAdmins:[],
   };
 
@@ -25,6 +23,13 @@ const initialState = {
           Organization: action.payload.user.organization,
           Supervisor: action.payload.user.supervisor,
         };
+
+        case SET_ORGS_AND_ADMINS:
+          return {
+            ...state,
+            allOrgs: action.payload.orgsData,
+            allAdmins: action.payload.adminsData,
+          }
 
         default:
           return state;

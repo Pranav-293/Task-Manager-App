@@ -4,8 +4,11 @@ import About from "./About";
 import SuperAdminSidebar from "./SuperAdminSidebar";
 import Organizations from "./Organizations";
 import Admins from "./Admins";
+import { useDispatch } from "react-redux";
+import { getOrgsAndAdmins } from "../redux/actions/Actions";
 
 function SuperAdminDashboard() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     fetch("/isAuthenticated").then((res) => {
@@ -15,12 +18,13 @@ function SuperAdminDashboard() {
         }
       });
     });
+    dispatch(getOrgsAndAdmins());
   },[]);
   return (
     <div className="Home">
       <div className="HomeContainer">
-          <SuperAdminSidebar />
-        <div>
+          <SuperAdminSidebar/>
+        <div className="main">
           <Routes>
             <Route path="/admins" element={<Admins></Admins>}></Route>
             <Route

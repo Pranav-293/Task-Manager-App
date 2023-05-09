@@ -29,8 +29,17 @@ module.exports = function (passport) {
   //Get All Organizations
   router.get("/all-organizations", authController.getAllOrganizations);
 
+  //Get All Admins
+  router.get("/all-admins", authController.getAllAdmins);
+
   // Create a new user
   router.post("/user", authController.createUser);
+
+  //Delete an organization
+  router.delete("/organization/:id", authController.deleteOrg);
+
+  //Delete an admin
+  router.delete("/admin/:id", authController.deleteAdmin);
 
   // Logout user
   router.post("/logout", authController.logOut);

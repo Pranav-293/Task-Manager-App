@@ -51,7 +51,7 @@ function About() {
           </div>
         </div>
       </div>
-      <button onClick={handleLogout}>Log out</button>
+      <button className="normalButton" onClick={handleLogout}>Log out</button>
     </div>
   );
 }

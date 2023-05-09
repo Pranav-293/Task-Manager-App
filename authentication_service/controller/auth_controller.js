@@ -136,7 +136,7 @@ async function createOrg(req, res) {
           "Unauthorized Access, only Super Admin can perform this operation",
       });
     else {
-      const org = Org.findOne({ name: req.body.name });
+      const org = await Org.findOne({ name: req.body.name });
       if (org) {
         res.send({
           status: "error",
@@ -180,6 +180,17 @@ function getAllOrganizations(req, res) {
         message: e.message,
       })
     );
+}
+
+function getAllAdmins(req,res){
+  User.find({level: "Admin"})
+  .then((admins) => res.send({ status: "ok", admins: admins }))
+  .catch((e) =>
+    res.send({
+      status: "error",
+      message: e.message,
+    })
+  );
 }
 
 async function createUser(req, res) {
@@ -241,6 +252,32 @@ async function createUser(req, res) {
   }
 }
 
+async function deleteOrg(req, res){
+  try {
+    if(!req.params && !req.params.id) {
+      throw new Error("Please pass the parameters");
+    }
+    const orgId = req.params.id;
+    Org.findOneAndDelete({id: orgId}).then(res.send({"status":"ok", "message":"deleted succesfully"})).catch(e => {throw e});
+  }
+  catch (e) {
+    res.send({"status":"error", "message":e.message});
+  }
+}
+
+async function deleteAdmin(req, res){
+  try {
+    if(!req.params && !req.params.id) {
+      throw new Error("Please pass the parameters");
+    }
+    const adminId = req.params.id;
+    User.findOneAndDelete({id: adminId}).then(res.send({"status":"ok", "message":"deleted succesfully"})).catch(e => {throw e});
+  }
+  catch (e) {
+    res.send({"status":"error", "message":e.message});
+  }
+}
+
 function logOut(req, res) {
   try {
     // req.logout(function (err) {
@@ -267,6 +304,9 @@ module.exports = {
   createAdmin,
   createOrg,
   getAllOrganizations,
+  getAllAdmins,
   createUser,
+  deleteOrg,
+  deleteAdmin,
   logOut,
 };
