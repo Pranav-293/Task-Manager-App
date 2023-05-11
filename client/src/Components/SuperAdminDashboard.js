@@ -11,9 +11,9 @@ function SuperAdminDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("/isAuthenticated").then((res) => {
+    fetch("/auth-api/isAuthenticated").then((res) => {
       res.json().then((data) => {
-        if (data.status !== "ok") {
+        if (data.status !== "ok" || data.user.level!=="Super Admin") {
           navigate("/login");
         }
       });

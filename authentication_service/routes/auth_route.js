@@ -38,14 +38,14 @@ module.exports = function (passport) {
   //Delete an organization
   router.delete("/organization/:id", authController.deleteOrg);
 
-  //Delete an admin
-  router.delete("/admin/:id", authController.deleteAdmin);
+  //Delete any user
+  router.delete("/user/:id", authController.deleteUser);
 
   // Logout user
   router.post("/logout", authController.logOut);
 
   router.use("*", (req, res) => {
-    res.status(404).send("Sorry, can't find that");
+    res.status(404).send(`Sorry, can't find ${req.baseUrl}`);
   });
 
   return router;

@@ -8,7 +8,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function Admins() {
   useEffect(() => {
-    console.log("Organizations page rendered");
+    console.log("Admin page rendered");
   }, []);
   const dispatch = useDispatch();
   const [visibility, setVisibility] = useState(false);

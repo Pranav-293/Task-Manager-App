@@ -265,7 +265,7 @@ async function deleteOrg(req, res){
   }
 }
 
-async function deleteAdmin(req, res){
+async function deleteUser(req, res){
   try {
     if(!req.params && !req.params.id) {
       throw new Error("Please pass the parameters");
@@ -307,6 +307,6 @@ module.exports = {
   getAllAdmins,
   createUser,
   deleteOrg,
-  deleteAdmin,
+  deleteUser,
   logOut,
 };

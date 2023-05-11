@@ -9,7 +9,7 @@ function Login() {
   const [message, setMessage] = useState("");
   async function handleLogin() {
     try {
-      const res = await fetch("/login", {
+      const res = await fetch("/auth-api/login", {
         method: "POST",
         body: JSON.stringify({ email: email, password: password }),
         headers: {

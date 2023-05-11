@@ -38,6 +38,12 @@ async function getUserDetail(req, res) {
   }
 }
 
+/***
+ * Creates a new task
+ * @param name - name of the task
+ * @param detail - detail of the task
+ * @param userId - id of the user to which the task is assigned (not required if you an user);
+ */
 function createTask(req, res) {
   try {
     if (!req.body || !req.body.name || !req.body.detail) {
@@ -79,27 +85,13 @@ async function getTasks(req, res) {
     if (req.session.level === "Super Admin") {
       throw new Error("You are a Super Admin");
     }
-    const userId = req.session.passport.user;
-    const user = await Users.findOne({ id: userId }).catch((e) => {
-      throw e;
-    });
-    if (req.session.level === "Admin") {
-      const tasks = await Tasks.find({ createdBy: user.id }).catch((e) => {
+      const tasks = await Tasks.find().catch((e) => {
         throw e;
       });
       res.send({
         status: "ok",
         data: tasks,
       });
-    } else {
-      const tasks = await Tasks.find({ userId: user.id }).catch((e) => {
-        throw e;
-      });
-      res.send({
-        status: "ok",
-        data: tasks,
-      });
-    }
   } catch (e) {
     console.log(e);
     res.send({ status: "error", message: e.message });
@@ -148,10 +140,9 @@ function markComplete(req, res) {
   }
 }
 
-async function getUsersUnderAdmin(req, res) {
+async function getAllUsers(req, res) {
   try {
-    const adminId = req.session.passport.user;
-    const users = await Users.find({ reporting: adminId }, { name: 1 }).catch(
+    const users = await Users.find({level: "User"}).catch(
       (e) => {
         throw e;
       }
@@ -202,7 +193,7 @@ module.exports = {
   deleteTask,
   markInProgress,
   markComplete,
-  getUsersUnderAdmin,
+  getAllUsers,
   getAssignedTasksByUserId,
   getPersonalTasks,
 };

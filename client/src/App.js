@@ -3,7 +3,7 @@ import { useEffect } from "react";
  function App() {
   const navigate = useNavigate();
   useEffect(() => {
-     fetch("/isAuthenticated").then(res => {res.json().then(data => {
+     fetch("/auth-api/isAuthenticated").then(res => {res.json().then(data => {
       if(data.status!=='ok'){
         navigate("/login");
       }else{
