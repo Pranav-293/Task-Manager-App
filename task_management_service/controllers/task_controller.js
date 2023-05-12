@@ -180,6 +180,23 @@ async function getAllUsers(req, res) {
   }
 }
 
+/**
+ * Deletes all tasks of a user whose id is passed in request params
+ */
+async function deleteAllTasksOfAUser(req, res) {
+  try {
+    const id = req.params.id;
+    Tasks.deleteMany({ userId: id })
+      .then(res.send({ status: "ok", message: "All tasks of user deleted successfully" }))
+      .catch((e) => {
+        throw e;
+      });
+  } catch (e) {
+    console.log(e);
+    res.send({ status: "error", message: e.message });
+  }
+}
+
 async function getAssignedTasksByUserId(req, res) {
   try {
     const adminId = req.session.passport.user;
@@ -218,6 +235,7 @@ module.exports = {
   markComplete,
   getAllUsers,
   updateTask,
+  deleteAllTasksOfAUser,
   getAssignedTasksByUserId,
   getPersonalTasks,
 };

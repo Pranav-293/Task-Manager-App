@@ -30,6 +30,9 @@ router.get("/all-users", taskController.getAllUsers);
 //Update the task
 router.put("/update-task/:id",taskController.updateTask);
 
+//Delete all tasks of an user
+router.delete("/all-tasks/:id",taskController.deleteAllTasksOfAUser);
+
 router.get("/assigned-tasks/:id", taskController.getAssignedTasksByUserId);
 
 router.get("/personal-tasks",taskController.getPersonalTasks);
