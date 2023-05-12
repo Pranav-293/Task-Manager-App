@@ -53,8 +53,11 @@ function createTask(req, res) {
       throw new Error("Only Admins and Users can create a task");
     }
     const taskId = uniqid();
-    const taskName = req.body.name;
-    const taskDetail = req.body.detail;
+    const taskName = (req.body.name).trim();
+    const taskDetail = (req.body.detail).trim();
+    if(taskName.length===0 || taskDetail.length===0) {
+      throw new Error("Please fill all the fields");
+    }
     const taskCreatedBy = req.session.passport.user;
     const taskUpdatedBy = req.session.passport.user;
     const taskStatus = "todo";
@@ -103,6 +106,26 @@ function deleteTask(req, res) {
     const taskId = req.params.id;
     Tasks.deleteOne({ id: taskId })
       .then(res.send({ status: "ok", message: "task deleted successfully" }))
+      .catch((e) => {
+        throw e;
+      });
+  } catch (e) {
+    console.log(e);
+    res.send({ status: "error", message: e.message });
+  }
+}
+
+
+/**
+ * Function to update the task
+ * @param {string} res.body.data - The details of the task
+ */
+function updateTask(req, res) {
+  try {
+    const taskId = req.params.id;
+    if(!req.body || !req.body.data || req.body.data==="" || req.body.data.trim().length===0) throw new Error("Cannot leave details empty");
+    Tasks.findOneAndUpdate({id:taskId}, {detail: req.body.data})
+      .then(res.send({ status: "ok", message: "task updated successfully" }))
       .catch((e) => {
         throw e;
       });
@@ -194,6 +217,7 @@ module.exports = {
   markInProgress,
   markComplete,
   getAllUsers,
+  updateTask,
   getAssignedTasksByUserId,
   getPersonalTasks,
 };

@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import AssignTask from "./AssignTask";
 import AddTask from "./AddTask";
 import { useState } from "react";
-import InProgressTask from "./InProgressTask";
-import CompletedTask from "./CompleteTask";
 import { markInProgress, getTasksAndUsers, deleteTask, completeTask } from "../redux/actions/Actions";
 function TaskDashboard({allTasks=[]}) {
   const dispatch = useDispatch();

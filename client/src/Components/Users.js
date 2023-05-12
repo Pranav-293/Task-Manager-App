@@ -47,7 +47,7 @@ function Users() {
               </div>
             </div>
           ))) : (
-            AllUsers.filter(item => (item.name).toLowerCase().includes(searchText)).map((user) => (
+            AllUsers.filter(item => (item.name).toLowerCase().includes(searchText.trim().toLowerCase())).map((user) => (
               <div key={user.id} className="card">
                 <div className="title">{user.name}</div>
                 <div className="text">{user.email}</div>

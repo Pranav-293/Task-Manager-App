@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { assignTask, getTasksAndUsers } from "../redux/actions/Actions";
 function AddTask({ visibility, setVisibility }) {
   const [name, setName] = useState("");
   const [detail, setDetail] = useState("");
   const [message, setMessage] = useState("");
+  useEffect(() => {
+    setMessage("");
+  },[name,detail]);
   const dispatch = useDispatch();
   async function handleAdd() {
     if (name === "" || detail === "" ) {

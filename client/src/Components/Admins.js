@@ -35,7 +35,7 @@ function Admins() {
             type="text"
             placeholder="search"
             value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) => setSearchText((e.target.value))}
           />
         </div>
       </div>
@@ -56,7 +56,7 @@ function Admins() {
               </div>
             </div>
           ))) : (
-            AllAdmins.filter(item => (item.name).toLowerCase().includes(searchText)).map((admin) => (
+            AllAdmins.filter(item => (item.name).toLowerCase().includes(searchText.trim().toLowerCase())).map((admin) => (
               <div key={admin.id} className="card">
                 <div className="title">{admin.name}</div>
                 <div className="text">{admin.email}</div>

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser, getTasksAndUsers } from "../redux/actions/Actions";
+
 
 function AddUser({ visibility, setVisibility }) {
   const dispatch = useDispatch();
@@ -9,8 +10,12 @@ function AddUser({ visibility, setVisibility }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState();
+  useEffect(() => {
+    setMessage("");
+  },[name,email,username,password])
+
   async function handleAdd() {
-    if (name === "" || email === "" || username === "" || password === "") {
+    if (name.trim() === "" || email.trim() === "" || username.trim() === "" || password.trim() === "") {
       setMessage("Please fill the inputs");
     }else {
       const data = await dispatch(

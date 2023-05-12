@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAdmin, getOrgsAndAdmins } from "../redux/actions/Actions";
 
@@ -11,6 +11,9 @@ function AddAdmin({ visibility, setVisibility }) {
   const [password, setPassword] = useState("");
   const [orgId, setOrgId] = useState("");
   const [message, setMessage] = useState();
+  useEffect(() => {
+    setMessage("");
+  },[name, email, username, password])
   async function handleAdd() {
     if (name === "" || email === "" || username === "" || password === "") {
       setMessage("Please fill the inputs");
@@ -18,7 +21,7 @@ function AddAdmin({ visibility, setVisibility }) {
       setMessage("Please select organization");
     } else {
       const data = await dispatch(
-        addAdmin(name, email, username, password, orgId)
+        addAdmin(name.trim(), email.trim(), username.trim(), password.trim(), orgId.trim())
       );
       if (data.status === "ok") {
         setName("");
@@ -45,25 +48,25 @@ function AddAdmin({ visibility, setVisibility }) {
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName((e.target.value))}
           />
           <label htmlFor="">Email</label>
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail((e.target.value))}
           />
           <label>Username</label>
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername((e.target.value))}
           />
           <label>Password</label>
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword((e.target.value))}
           />
           <label>Organization</label>
           <select

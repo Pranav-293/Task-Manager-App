@@ -15,14 +15,20 @@ router.get("/all-tasks", taskController.getTasks);
 // Creates a new Task
 router.post("/task", taskController.createTask);
 
+// Deletes a task
 router.delete("/task/:id", taskController.deleteTask);
 
+// Changes the status of the task to in Progress
 router.put("/mark-inProgress/:id",taskController.markInProgress);
 
+// Change the status of the task to completed
 router.put("/mark-complete/:id",taskController.markComplete);
 
 // Get all users
 router.get("/all-users", taskController.getAllUsers);
+
+//Update the task
+router.put("/update-task/:id",taskController.updateTask);
 
 router.get("/assigned-tasks/:id", taskController.getAssignedTasksByUserId);
 

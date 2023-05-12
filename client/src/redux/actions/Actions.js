@@ -2,7 +2,6 @@ import {
   SET_USER,
   SET_ORGS_AND_ADMINS,
   SET_TASKS_AND_USERS,
-  SET_ALL_TASKS,
 } from "./ActionTypes";
 
 export const setUser = (user) => {
@@ -192,7 +191,6 @@ export const getTasksAndUsers = () => {
   };
 };
 
-
 export const assignTask = (name, details, userId = "") => {
   return async function (dispatch) {
     const res = await fetch("/task-api/task", {
@@ -253,3 +251,23 @@ export const completeTask = (id) => {
   }
   
 };
+
+export const updateTask = (id, detail) => {
+  return async function() {
+    try {
+      const res = await fetch(`/task-api/update-task/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          data : detail
+        })  ,
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      const data = await res.json();
+      return data;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+}

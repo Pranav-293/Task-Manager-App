@@ -12,9 +12,9 @@ function UserDashboard() {
   const dispatch = useDispatch();
   let allTasks = useSelector((state) => state.taskReducer.allTasks);
   const userId = useSelector((state) => state.authReducer.userId);
-  if (searchText !== "") {
+  if (searchText.trim() !== "") {
     allTasks = allTasks.filter((task) =>
-      task.name.toLowerCase().includes(searchText.toLowerCase())
+      task.name.toLowerCase().includes(searchText.trim().toLowerCase())
     );
   }
   useEffect(() => {

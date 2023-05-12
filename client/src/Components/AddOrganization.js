@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addOrganization } from "../redux/actions/Actions";
 
@@ -7,11 +7,14 @@ function AddOrganization({ visibility, setVisibility }) {
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [message, setMessage] = useState("");
+  useEffect(() => {
+    setMessage("");
+  },[name, details])
   async function handleAdd() {
-    if (name === "" || details === "") {
+    if (name.trim() === "" || details.trim() === "") {
       setMessage("Please fill the inputs");
     } else {
-      const data = await dispatch(addOrganization(name, details));
+      const data = await dispatch(addOrganization(name.trim(), details.trim()));
       if(data.status === "ok") {
         setName("");
       setDetails("");

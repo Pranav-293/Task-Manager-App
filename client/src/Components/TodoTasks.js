@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import {  useSelector } from "react-redux";
+import {  useSelector, useDispatch } from "react-redux";
+import { getTasksAndUsers, updateTask } from "../redux/actions/Actions";
 function TodoTasks({ name, details, id, user, creator, func , funcName, css }) {
+  const dispatch = useDispatch();
   const AllUsers = useSelector((state) => state.taskReducer.allUsers);
   const userId = useSelector(state => state.authReducer.userId);
   const [isEditable, setIsEditable] = useState(false);
@@ -14,12 +16,15 @@ function TodoTasks({ name, details, id, user, creator, func , funcName, css }) {
     }
     return user[0].name;
   }
-  function handleOnClick() {
+  async function handleOnClick(id, detail) {
     if (isEditable === false) {
       setIsEditable(true);
     } else {
-      //Todo
-      //update task
+      const data = await dispatch(updateTask(id, detail));
+      console.log(data);
+      if(data.status==='ok'){
+        dispatch(getTasksAndUsers());
+      }
       setIsEditable(false);
     }
   }
@@ -53,7 +58,7 @@ function TodoTasks({ name, details, id, user, creator, func , funcName, css }) {
           )}
         </div>
         <div className="taskBottomButtons">
-          <button className="Edit" onClick={handleOnClick}>
+          <button className="Edit" onClick={() => handleOnClick(id, taskDetails)}>
             {isEditable ? "Save" : "Edit"}
           </button>
           <button className= {css} onClick={() => func(id)}>

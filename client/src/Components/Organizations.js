@@ -32,7 +32,7 @@ function Organizations() {
       <div className="scrollable">
         {searchText !== ""
           ? AllOrgs.filter((item) =>
-              item.name.toLowerCase().includes(searchText.toLowerCase())
+              item.name.toLowerCase().includes(searchText.trim().toLowerCase())
             ).map((org) => (
               <div key={org.id} className="card">
                 <div className="title">{org.name}</div>
