@@ -11,6 +11,9 @@ function AddAdmin({ visibility, setVisibility }) {
   const [password, setPassword] = useState("");
   const [orgId, setOrgId] = useState("");
   const [message, setMessage] = useState();
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
   useEffect(() => {
     setMessage("");
   },[name, email, username, password])
@@ -19,7 +22,10 @@ function AddAdmin({ visibility, setVisibility }) {
       setMessage("Please fill the inputs");
     } else if (orgId === "") {
       setMessage("Please select organization");
-    } else {
+    }else if(!isValidEmail(email)){
+      setMessage("Please enter a valid email");
+    }
+    else {
       const data = await dispatch(
         addAdmin(name.trim(), email.trim(), username.trim(), password.trim(), orgId.trim())
       );

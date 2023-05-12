@@ -12,12 +12,18 @@ function AddUser({ visibility, setVisibility }) {
   const [message, setMessage] = useState();
   useEffect(() => {
     setMessage("");
-  },[name,email,username,password])
+  },[name,email,username,password]);
 
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
   async function handleAdd() {
     if (name.trim() === "" || email.trim() === "" || username.trim() === "" || password.trim() === "") {
       setMessage("Please fill the inputs");
-    }else {
+    }else if(!isValidEmail(email)){
+      setMessage("Please enter a valid email");
+    }
+    else {
       const data = await dispatch(
         addUser(name, email, username, password)
       );

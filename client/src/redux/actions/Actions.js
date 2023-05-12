@@ -120,6 +120,11 @@ export const deleteAdmin = (id) => {
   };
 };
 
+/**
+ * Deletes a user and all its tasks
+ * @param {string} id - id of the user which needs to be deleted
+ * @returns status
+ */
 export const deleteUser = (id) => {
   return async function (dispatch) {
     const res = await fetch(`/auth-api/user/${id}`, {
@@ -129,7 +134,14 @@ export const deleteUser = (id) => {
     if (data.status === "error") {
       console.error(data.message);
     } else {
-      dispatch(getTasksAndUsers());
+      const taskRes = await fetch(`/task-api/all-tasks/${id}`, {
+        method: "DELETE",
+      });
+      const taskData = await taskRes.json();
+      if(taskData.status === "error") {
+        console.error(data.message);
+      }
+      else  dispatch(getTasksAndUsers());
     }
   };
 };
