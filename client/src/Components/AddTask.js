@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { assignTask, getAllTasks } from "../redux/actions/Actions";
+import { assignTask, getTasksAndUsers } from "../redux/actions/Actions";
 function AddTask({ visibility, setVisibility }) {
   const [name, setName] = useState("");
   const [detail, setDetail] = useState("");
@@ -14,7 +14,7 @@ function AddTask({ visibility, setVisibility }) {
       const data = await dispatch(assignTask(name, detail));
       console.log(data);
       if(data.status === "ok") {
-        dispatch(getAllTasks());
+        dispatch(getTasksAndUsers());
         setName("");
       setDetail("");
       setVisibility(false);

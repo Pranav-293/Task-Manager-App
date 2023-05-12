@@ -1,4 +1,4 @@
-import { SET_TASKS_AND_USERS, SET_ALL_TASKS } from "../actions/ActionTypes";
+import { SET_TASKS_AND_USERS } from "../actions/ActionTypes";
 
 const initialState = {
     allUsers:[],
@@ -13,12 +13,6 @@ const initialState = {
           allUsers : action.payload.users,
           allTasks : action.payload.tasks
     };
-
-    case SET_ALL_TASKS:
-      return{
-        ...state,
-        allTasks: action.payload
-      }
 
         default:
             return state;

@@ -151,12 +151,6 @@ export const getUser = () => {
   };
 };
 
-export const setAllTasks = (tasks) => {
-  return {
-    type: SET_ALL_TASKS,
-    payload: tasks,
-  };
-};
 
 export const getOrgsAndAdmins = () => {
   return async function (dispatch) {
@@ -198,20 +192,6 @@ export const getTasksAndUsers = () => {
   };
 };
 
-export const getAllTasks = () => {
-  return async function (dispatch) {
-    try {
-      const tasksRes = await fetch("/task-api/all-tasks");
-      const tasksData = await tasksRes.json();
-      if (tasksData.status === "error") {
-        throw new Error(tasksData.message);
-      }
-      dispatch(setAllTasks(tasksData.data));
-    } catch (e) {
-      console.error(e.message);
-    }
-  };
-};
 
 export const assignTask = (name, details, userId = "") => {
   return async function (dispatch) {
@@ -248,7 +228,7 @@ async function getSupervisor() {
 export const markInProgress = (id) => {
   return async function(){
     try {
-      const res = await fetch(`task-api/mark-inProgress/${id}`, {
+      const res = await fetch(`/task-api/mark-inProgress/${id}`, {
         method: "PUT",
       });
       const data = await res.json();
@@ -262,7 +242,7 @@ export const markInProgress = (id) => {
 export const completeTask = (id) => {
   return async function() {
     try {
-      const res = await fetch(`task-api/mark-complete/${id}`, {
+      const res = await fetch(`/task-api/mark-complete/${id}`, {
         method: "PUT",
       });
       const data = await res.json();

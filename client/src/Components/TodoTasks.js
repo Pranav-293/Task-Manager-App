@@ -1,17 +1,18 @@
 import React from "react";
 import { useState } from "react";
-import { markInProgress } from "../redux/actions/Actions";
-import { useDispatch } from "react-redux";
-import { getAllTasks } from "../redux/actions/Actions";
-function TodoTasks({ name, details, id, user = "" }) {
-  const dispatch = useDispatch();
+import {  useSelector } from "react-redux";
+function TodoTasks({ name, details, id, user, creator, func , funcName, css }) {
+  const AllUsers = useSelector((state) => state.taskReducer.allUsers);
+  const userId = useSelector(state => state.authReducer.userId);
   const [isEditable, setIsEditable] = useState(false);
   const [taskName, setTaskName] = useState(name);
   const [taskDetails, setTaskDetails] = useState(details);
-  async function moveToInprogress() {
-    const data = await dispatch(markInProgress(id));
-    console.log(data);
-    if (data.status === "ok") dispatch(getAllTasks());
+  function getUser(userId) {
+    const user = AllUsers.filter((user) => user.id === userId);
+    if (user.length === 0) {
+      return "";
+    }
+    return user[0].name;
   }
   function handleOnClick() {
     if (isEditable === false) {
@@ -24,7 +25,15 @@ function TodoTasks({ name, details, id, user = "" }) {
   }
   return (
     <div className="taskCard">
-      {user !== "" ? <div className="taskUser">{user}</div> : <div></div>}
+      <div className="taskCardTop">
+        {user !== userId ? (
+          <div className="taskUser">{getUser(user)}</div>
+        ) : (
+            <div></div>
+        )}
+        {user === creator ? <div className="taskCreator"> Self </div> : <div/>}
+      </div>
+
       <div className="taskInputs">
         <input
           className="taskName"
@@ -40,17 +49,15 @@ function TodoTasks({ name, details, id, user = "" }) {
               disabled={isEditable ? false : true}
             ></textarea>
           ) : (
-            <div>
-              {taskDetails}
-            </div>
+            <div>{taskDetails}</div>
           )}
         </div>
         <div className="taskBottomButtons">
           <button className="Edit" onClick={handleOnClick}>
             {isEditable ? "Save" : "Edit"}
           </button>
-          <button className="MoveTodo" onClick={moveToInprogress}>
-            Move to InProgress
+          <button className= {css} onClick={() => func(id)}>
+            {funcName}
           </button>
         </div>
       </div>

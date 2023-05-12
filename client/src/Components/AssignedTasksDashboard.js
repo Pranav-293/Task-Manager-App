@@ -1,43 +1,47 @@
 import { React, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import About from "./About";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { getTasksAndUsers } from "../redux/actions/Actions";
 import TaskDashboard from "./TaskDashboard";
-function UserDashboard() {
+function AssignedTasksDashboard() {
   const [searchText, setSearchText] = useState("");
-  const [isPersonalTask, setIsPersonalTask] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   let allTasks = useSelector((state) => state.taskReducer.allTasks);
   const userId = useSelector((state) => state.authReducer.userId);
+  const allUsers = useSelector((state) => state.taskReducer.allUsers);
+  const [user, setUser] = useState("");
   if (searchText !== "") {
     allTasks = allTasks.filter((task) =>
       task.name.toLowerCase().includes(searchText.toLowerCase())
     );
   }
   useEffect(() => {
-    console.log("User Dashboard Rendered");
-    fetch("/auth-api/isAuthenticated").then((res) => {
-      res.json().then((data) => {
-        if (data.status !== "ok" || data.user.level !== "User") {
-          navigate("/login");
-        } else {
-          dispatch(getTasksAndUsers());
-        }
-      });
-    });
+    console.log("Assigned Tasks Dashboard Rendered");
+    dispatch(getTasksAndUsers());
   }, []);
   return (
-    <div className="Home">
+    <div className="AssignedTasksHome">
       <div className="UserHome">
         <div className="dashboard">
           <div className="header">
             <div className="headerContent">
               <div className="headerButtons">
-                <button className={isPersonalTask?"":"active"} onClick={ () => setIsPersonalTask(false)}>All</button>
-                <button className={!isPersonalTask?"":"active"} onClick={() => setIsPersonalTask(true)}>Personal</button>
+                <div className="filter">
+                <label>Filter by user</label>
+                <select
+                  name="user"
+                  id="user"
+                  value={user}
+                  onChange={(e) => setUser(e.target.value)}
+                >
+                  <option value="">All</option>
+                  {allUsers.filter(user => user.reporting === userId).map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
+                </div>
               </div>
               <div className="search">
                 <input
@@ -50,21 +54,19 @@ function UserDashboard() {
             </div>
           </div>
           {
-            !isPersonalTask?
-            <TaskDashboard
-            allTasks={allTasks.filter((task) => task.userId === userId)}
-          />
-          :
-          <TaskDashboard
-            allTasks={allTasks.filter((task) => (task.userId === userId && task.createdBy === userId))}
-          />
+            user==="" ? (<TaskDashboard
+              allTasks={allTasks.filter((task) => task.createdBy === userId)}
+            />) : (
+              <TaskDashboard
+              allTasks={allTasks.filter((task) => (task.createdBy === userId && task.userId===user))}
+            />
+            )
           }
           
         </div>
-        <About />
       </div>
     </div>
   );
 }
 
-export default UserDashboard;
+export default AssignedTasksDashboard;

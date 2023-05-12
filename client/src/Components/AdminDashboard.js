@@ -1,11 +1,12 @@
 import { React, useEffect } from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import About from "./About";
-import Tasks from "./Tasks";
 import Users from "./Users";
 import AdminSideBar from "./AdminSideBar";
 import { getTasksAndUsers } from "../redux/actions/Actions";
 import { useDispatch } from "react-redux";
+// import Tasks from "./Tasks";
+import AssignedTasksDashboard from "./AssignedTasksDashboard";
 function AdminDashboard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,7 +28,8 @@ function AdminDashboard() {
         <div className="main">
           <Routes>
             <Route path="/users" element={<Users></Users>}></Route>
-            <Route path="/tasks" element={<Tasks></Tasks>}></Route>
+            {/* <Route path="/tasks" element={<Tasks></Tasks>}></Route> */}
+            <Route path="/tasks" element={<AssignedTasksDashboard/>}></Route>
           </Routes>
         </div>
         <About />

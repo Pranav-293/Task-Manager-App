@@ -2,15 +2,25 @@ import React from "react";
 import { useState } from "react";
 import { completeTask} from "../redux/actions/Actions";
 import { useDispatch } from "react-redux";
-import { getAllTasks } from "../redux/actions/Actions";
-function InProgressTask({ name, details, id, user = "" }) {
+import { getTasksAndUsers } from "../redux/actions/Actions";
+import { useSelector } from "react-redux";
+function InProgressTask({ name, details, id, user, creator, admin }) {
   const dispatch = useDispatch();
+  const AllUsers = useSelector((state) => state.taskReducer.allUsers);
   const [isEditable, setIsEditable] = useState(false);
   const [taskName, setTaskName] = useState(name);
   const [taskDetails, setTaskDetails] = useState(details);
+  const userId = useSelector(state => state.authReducer.userId);
+  function getUser(userId) {
+    const user = AllUsers.filter((user) => user.id === userId);
+    if (user.length === 0) {
+      return "";
+    }
+    return user[0].name;
+  }
   async function CompleteTask(){
     const data = await dispatch(completeTask(id));
-    if(data.status==='ok') dispatch(getAllTasks());
+    if(data.status==='ok') dispatch(getTasksAndUsers());
   }
   function handleOnClick() {
     if (isEditable === false) {
@@ -23,7 +33,14 @@ function InProgressTask({ name, details, id, user = "" }) {
   }
   return (
     <div className="taskCard">
-      {(user!=="")?<div className="taskUser">{user}</div>:<div></div>}
+      <div className="taskCardTop">
+        {user !== userId ? (
+          <div className="taskUser">{getUser(user)}</div>
+        ) : (
+            <div></div>
+        )}
+        {user === creator ? <div className="taskCreator"> Self </div> : <div/>}
+      </div>
       <div className="taskInputs"><input
         className="taskName"
         value={taskName}

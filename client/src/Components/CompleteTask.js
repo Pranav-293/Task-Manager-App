@@ -1,17 +1,26 @@
 import React from "react";
 import { useState } from "react";
 import {  deleteTask} from "../redux/actions/Actions";
-import { useDispatch } from "react-redux";
-import { getAllTasks } from "../redux/actions/Actions";
-function CompletedTask({ name, details, id, user = "" }) {
+import { useDispatch, useSelector } from "react-redux";
+import { getTasksAndUsers } from "../redux/actions/Actions";
+function CompletedTask({ name, details, id, user, creator, admin }) {
   const dispatch = useDispatch();
+  const AllUsers = useSelector((state) => state.taskReducer.allUsers);
+  const userId = useSelector(state => state.authReducer.userId);
   const [isEditable, setIsEditable] = useState(false);
   const [taskName, setTaskName] = useState(name);
   const [taskDetails, setTaskDetails] = useState(details);
+  function getUser(userId) {
+    const user = AllUsers.filter((user) => user.id === userId);
+    if (user.length === 0) {
+      return "";
+    }
+    return user[0].name;
+  }
   async function DeleteTask(){
     const data = await dispatch(deleteTask(id));
     console.log(data)
-    if(data.status==='ok') dispatch(getAllTasks());
+    if(data.status==='ok') dispatch(getTasksAndUsers());
   }
   function handleOnClick() {
     if (isEditable === false) {
@@ -24,7 +33,14 @@ function CompletedTask({ name, details, id, user = "" }) {
   }
   return (
     <div className="taskCard">
-      {(user!=="")?<div className="taskUser">{user}</div>:<div></div>}
+      <div className="taskCardTop">
+        {user !== userId ? (
+          <div className="taskUser">{getUser(user)}</div>
+        ) : (
+            <div></div>
+        )}
+        {user === creator ? <div className="taskCreator"> Self </div> : <div/>}
+      </div>
       <div className="taskInputs"><input
         className="taskName"
         value={taskName}
