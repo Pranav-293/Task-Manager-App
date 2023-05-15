@@ -1,6 +1,7 @@
 const redisStore = require("../config/redis.config");
 const session = require("express-session");
 
+// Session middleware configuration
 module.exports = session({
     store: redisStore,
     resave: false,

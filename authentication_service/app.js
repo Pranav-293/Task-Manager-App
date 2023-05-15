@@ -1,3 +1,7 @@
+/**
+ * Microservice for user authentication, users crud operations and organizations crud operations
+ */
+
 const express  = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -8,7 +12,7 @@ const initializePassport = require("./config/passport.config");
 const router = require("./routes/auth_route")(passport);
 const cookieParser = require("cookie-parser");
 
-
+// All middleware
 initializePassport(passport);
 app.use(express.json());
 app.use(cookieParser("Secret1234"));

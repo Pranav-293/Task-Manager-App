@@ -40,9 +40,8 @@ async function getUserDetail(req, res) {
 
 /***
  * Creates a new task
- * @param name - name of the task
- * @param detail - detail of the task
- * @param userId - id of the user to which the task is assigned (not required if you an user);
+ * @param {object} req - req.body should contain name, details of the task
+ * @param {object} res - the response object
  */
 function createTask(req, res) {
   try {
@@ -83,6 +82,9 @@ function createTask(req, res) {
   }
 }
 
+/**
+ * Get all the tasks from the database
+ */
 async function getTasks(req, res) {
   try {
     if (req.session.level === "Super Admin") {
@@ -101,6 +103,11 @@ async function getTasks(req, res) {
   }
 }
 
+/**
+ * Delete a task
+ * @param {object} req - req.params should contain id of the task
+ * @param {object} res
+ */
 function deleteTask(req, res) {
   try {
     const taskId = req.params.id;
@@ -118,7 +125,8 @@ function deleteTask(req, res) {
 
 /**
  * Function to update the task
- * @param {string} res.body.data - The details of the task
+ * @param {object} req - res.body.data should contain details of the task
+ * @param {object} res
  */
 function updateTask(req, res) {
   try {
@@ -135,6 +143,11 @@ function updateTask(req, res) {
   }
 }
 
+/**
+ * Function to change the status of the task to inProgress
+ * @param {object} req - res.params should contain id of the task
+ * @param {object} res
+ */
 function markInProgress(req, res) {
   try {
     const taskId = req.params.id;
@@ -149,6 +162,11 @@ function markInProgress(req, res) {
   }
 }
 
+/**
+ * Function to change the status of the task to complete
+ * @param {object} req - res.params should contain id of the task
+ * @param {object} res
+ */
 function markComplete(req, res) {
   try {
     const taskId = req.params.id;
@@ -163,6 +181,11 @@ function markComplete(req, res) {
   }
 }
 
+/**
+ * Function to get all the users from the database
+ * @param {object} req 
+ * @param {object} res
+ */
 async function getAllUsers(req, res) {
   try {
     const users = await Users.find({level: "User"}).catch(
@@ -181,7 +204,9 @@ async function getAllUsers(req, res) {
 }
 
 /**
- * Deletes all tasks of a user whose id is passed in request params
+ * Function to delete all the tasks of a user
+ * @param {object} req - res.params should contain id of the user
+ * @param {object} res
  */
 async function deleteAllTasksOfAUser(req, res) {
   try {
@@ -197,6 +222,11 @@ async function deleteAllTasksOfAUser(req, res) {
   }
 }
 
+/**
+ * Function to get all the tasks assigned to a specific user
+ * @param {object} req - res.params should contain id of the user
+ * @param {object} res
+ */
 async function getAssignedTasksByUserId(req, res) {
   try {
     const adminId = req.session.passport.user;
@@ -214,6 +244,11 @@ async function getAssignedTasksByUserId(req, res) {
   }
 }
 
+/**
+ * Function to get all the personal tasks
+ * @param {object} req
+ * @param {object} res
+ */
 async function getPersonalTasks(req, res) {
   try {
     if(req.session.level!=="User") throw new Error("Only users can fetch their personal tasks");

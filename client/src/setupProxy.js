@@ -1,4 +1,7 @@
+// Middle for setting the proxies
 const { createProxyMiddleware } = require("http-proxy-middleware");
+
+// Setting proxy for authentication microservice
 module.exports = function (app) {
   app.use(
     "/auth-api",
@@ -14,6 +17,8 @@ module.exports = function (app) {
       },
     })
   );
+
+  // Setting proxy for task management microservice
   app.use(
     "/task-api",
     createProxyMiddleware({

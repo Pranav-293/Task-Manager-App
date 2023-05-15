@@ -1,7 +1,10 @@
+// Database configuration
 const mongoose = require("mongoose");
-const username = "Pranav";
-const password = "Pranav1234";
-const URL = `mongodb+srv://${username}:${password}@cluster0.w6wmya9.mongodb.net/?retryWrites=true&w=majority`;
+
+// Connection details
+const username = "";
+const password = "";
+const URL = "";
 
 mongoose.connect(URL).catch((err) => {console.log(err.message);});
 

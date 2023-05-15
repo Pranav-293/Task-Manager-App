@@ -1,5 +1,6 @@
 import {SET_ORGS_AND_ADMINS, SET_USER } from "../actions/ActionTypes";
 
+//Initial State
 const initialState = {
     userId:"",
     Name:"",
@@ -11,6 +12,7 @@ const initialState = {
     allAdmins:[],
   };
 
+  //Authentication Reducer
   const authReducer = (state = initialState, action) => {
     switch (action.type) {
       case SET_USER:

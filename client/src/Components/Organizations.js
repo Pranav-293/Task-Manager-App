@@ -5,14 +5,18 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+/**
+ * Organization component
+ * @returns {Component} - A component where the admin can see and manage all the organizations
+ */
 function Organizations() {
-  useEffect(() => {
-    console.log("Organizations page rendered");
-  },[])
+
   const dispatch = useDispatch();
+
   const [visibility, setVisibility] = useState(false);
   const [searchText, setSearchText] = useState("");
   const AllOrgs = useSelector((state) => state.authReducer.allOrgs);
+
   return (
     <div className="Organizations">
       <div className="Heading">

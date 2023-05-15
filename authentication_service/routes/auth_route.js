@@ -5,9 +5,10 @@ const authController = require("../controller/auth_controller");
 module.exports = function (passport) {
   const router = express.Router();
 
-  // To check if the user is authenticated or not
+  // Check if the user is authenticated or not
   router.get("/isAuthenticated", authController.isAuthenticated);
 
+  // Login the user
   router.post("/login", authController.login(passport));
 
   // All the routes that come after this middleware are protected,
@@ -44,6 +45,7 @@ module.exports = function (passport) {
   // Logout user
   router.post("/logout", authController.logOut);
 
+  // For handling any unwanted requests
   router.use("*", (req, res) => {
     res.status(404).send(`Sorry, can't find ${req.baseUrl}`);
   });

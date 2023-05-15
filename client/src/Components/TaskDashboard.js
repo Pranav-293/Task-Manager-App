@@ -5,24 +5,48 @@ import AssignTask from "./AssignTask";
 import AddTask from "./AddTask";
 import { useState } from "react";
 import { markInProgress, getTasksAndUsers, deleteTask, completeTask } from "../redux/actions/Actions";
+
+/**
+ * Dashboard to show all the tasks
+ * @param {Array} allTasks
+ * @returns {Component} - A component which shows all the tasks in the form of kanban board
+ */
 function TaskDashboard({allTasks=[]}) {
+
   const dispatch = useDispatch();
+
   const userRole = useSelector((state) => state.authReducer.Role);
   const [visibility, setVisibility] = useState(false);
+
+  /**
+   * Function to move the task from todo to inProgress
+   * @param {string} id - id of the task
+   */
   async function moveToInprogress(id) {
     const data = await dispatch(markInProgress(id));
     console.log(data);
     if (data.status === "ok") dispatch(getTasksAndUsers());
   }
+
+  /**
+   * Function to delete a task
+   * @param {string} id - id of the task
+   */
   async function DeleteTask(id){
     const data = await dispatch(deleteTask(id));
     console.log(data)
     if(data.status==='ok') dispatch(getTasksAndUsers());
   }
+
+  /**
+   * Function to move the task from inProgress to complete
+   * @param {string} id - id of the task
+   */
   async function CompleteTask(id){
     const data = await dispatch(completeTask(id));
     if(data.status==='ok') dispatch(getTasksAndUsers());
   }
+  
   return (
     <div className="kanban">
         <div className="taskStack">

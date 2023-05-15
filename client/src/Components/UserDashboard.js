@@ -5,20 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { getTasksAndUsers } from "../redux/actions/Actions";
 import TaskDashboard from "./TaskDashboard";
+
+/**
+ * User Dashboard Component
+ * @returns {Component} - A component where users can see all the tasks assigned to them
+ */
 function UserDashboard() {
-  const [searchText, setSearchText] = useState("");
-  const [isPersonalTask, setIsPersonalTask] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  let allTasks = useSelector((state) => state.taskReducer.allTasks);
-  const userId = useSelector((state) => state.authReducer.userId);
-  if (searchText.trim() !== "") {
-    allTasks = allTasks.filter((task) =>
-      task.name.toLowerCase().includes(searchText.trim().toLowerCase())
-    );
-  }
+
+  // If the user is not logged in redirect to login page
+  // else fetch tasks and user's data from database
   useEffect(() => {
-    console.log("User Dashboard Rendered");
     fetch("/auth-api/isAuthenticated").then((res) => {
       res.json().then((data) => {
         if (data.status !== "ok" || data.user.level !== "User") {
@@ -29,6 +25,22 @@ function UserDashboard() {
       });
     });
   }, []);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [searchText, setSearchText] = useState("");
+  const [isPersonalTask, setIsPersonalTask] = useState(false);
+  let allTasks = useSelector((state) => state.taskReducer.allTasks);
+  const userId = useSelector((state) => state.authReducer.userId);
+
+  // Filter the list of tasks based on search input
+  if (searchText.trim() !== "") {
+    allTasks = allTasks.filter((task) =>
+      task.name.toLowerCase().includes(searchText.trim().toLowerCase())
+    );
+  }
+
   return (
     <div className="Home">
       <div className="UserHome">
@@ -59,7 +71,6 @@ function UserDashboard() {
             allTasks={allTasks.filter((task) => (task.userId === userId && task.createdBy === userId))}
           />
           }
-          
         </div>
         <About />
       </div>

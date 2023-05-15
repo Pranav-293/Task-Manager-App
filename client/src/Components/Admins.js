@@ -6,15 +6,24 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+/**
+ * The admins component
+ * @returns {Component} - The Admins Component where super admin can see and manage all the admins
+ */
 function Admins() {
-  useEffect(() => {
-    console.log("Admin page rendered");
-  }, []);
+
   const dispatch = useDispatch();
+
   const [visibility, setVisibility] = useState(false);
   const AllAdmins = useSelector((state) => state.authReducer.allAdmins);
   const AllOrgs = useSelector((state) => state.authReducer.allOrgs);
   const [searchText, setSearchText] = useState("");
+
+  /**
+   * Function to find the name of the organization from it's id
+   * @param {string} id - if of the organization
+   * @returns {string} - name of the organization
+   */
   function getOrg(id) {
     const orgs = AllOrgs.filter((org) => org.id === id);
     if (orgs.length === 0) {
@@ -23,6 +32,7 @@ function Admins() {
     const orgName = orgs[0].name;
     return orgName;
   }
+
   return (
     <div className="Organizations">
       <div className="Heading">
@@ -79,6 +89,7 @@ function Admins() {
         visibility={visibility}
         setVisibility={setVisibility}
       ></AddAdmin>
+      
       <button
         className="addOrgButton normalButton"
         onClick={() => setVisibility(!visibility)}

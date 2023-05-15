@@ -1,14 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { assignTask, getTasksAndUsers } from "../redux/actions/Actions";
+
+/**
+ * Component to add a new task
+ * @param {boolean} visibility - The component will be visible if set to true, otherwise hidden
+ * @param {function} setVisibility - The function to change the value of visibility boolean
+ * @returns A component to add a new task
+ */
 function AddTask({ visibility, setVisibility }) {
-  const [name, setName] = useState("");
-  const [detail, setDetail] = useState("");
-  const [message, setMessage] = useState("");
+
+  // Sets the error message to empty on change of name or details field
   useEffect(() => {
     setMessage("");
   },[name,detail]);
+
+  const [name, setName] = useState("");
+  const [detail, setDetail] = useState("");
+  const [message, setMessage] = useState("");
+
   const dispatch = useDispatch();
+
+  /**
+   * Function to add a new task
+   */
   async function handleAdd() {
     if (name === "" || detail === "" ) {
       setMessage("Please fill the inputs");
@@ -27,6 +42,7 @@ function AddTask({ visibility, setVisibility }) {
       }
     }
   }
+  
   if (visibility) {
     return (
         <div className="AddOrg">

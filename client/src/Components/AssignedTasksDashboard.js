@@ -3,22 +3,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { getTasksAndUsers } from "../redux/actions/Actions";
 import TaskDashboard from "./TaskDashboard";
+
+/**
+ * Assigned Tasks component
+ * @returns The component which shows all the tasks assigned to all user under an admin
+ */
 function AssignedTasksDashboard() {
-  const [searchText, setSearchText] = useState("");
+
+  // Get list of all the tasks and users
+  useEffect(() => {
+    dispatch(getTasksAndUsers());
+  }, []);
+
   const dispatch = useDispatch();
+
+  const [searchText, setSearchText] = useState("");
   let allTasks = useSelector((state) => state.taskReducer.allTasks);
   const userId = useSelector((state) => state.authReducer.userId);
   const allUsers = useSelector((state) => state.taskReducer.allUsers);
   const [user, setUser] = useState("");
+
+  // Filters the list of all tasks according to search input
   if (searchText.trim() !== "") {
     allTasks = allTasks.filter((task) =>
       task.name.toLowerCase().includes(searchText.trim().toLowerCase())
     );
   }
-  useEffect(() => {
-    console.log("Assigned Tasks Dashboard Rendered");
-    dispatch(getTasksAndUsers());
-  }, []);
+
   return (
     <div className="AssignedTasksHome">
       <div className="UserHome">

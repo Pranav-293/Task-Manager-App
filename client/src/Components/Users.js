@@ -6,15 +6,19 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+/**
+ * Users Component
+ * @returns {Component} - A component to see and manage users under an admin
+ */
 function Users() {
-  useEffect(() => {
-    console.log("Users page rendered");
-  }, []);
+  
   const dispatch = useDispatch();
+
   const [visibility, setVisibility] = useState(false);
   const userId = useSelector(state => state.authReducer.userId);
   const AllUsers = useSelector((state) => state.taskReducer.allUsers).filter(user => user.reporting===userId);
   const [searchText, setSearchText] = useState("");
+  
   return (
     <div className="Organizations">
       <div className="Heading">

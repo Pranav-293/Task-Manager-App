@@ -1,6 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+/**
+ * Sidebar Component
+ * @returns Sidebar Component which contains links to users and tasks page
+ */
 function AdminSideBar() {
     return (
         <div className='Sidebar'>

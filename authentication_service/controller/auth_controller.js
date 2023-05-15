@@ -3,6 +3,10 @@ const uniqid = require("uniqid");
 const crypto = require("crypto");
 const Org = require("../models/organization");
 
+/**
+ * Function to check if the user is logged in or not.
+ * @returns - user object
+ */
 function isAuthenticated(req, res) {
   try {
     if (req.isAuthenticated()) {
@@ -15,6 +19,10 @@ function isAuthenticated(req, res) {
   }
 }
 
+/**
+ * Function to log in the user
+ * @param {object} passport - The passport object which has been initialized
+ */
 function login(passport) {
   return function handleLogin(req, res, next) {
     try {
@@ -46,6 +54,11 @@ function login(passport) {
   };
 }
 
+/**
+ * Function to get the name of the organization of the current user
+ * @param {object} req
+ * @param {object} res
+ */
 async function getOrg(req, res) {
   try {
     const orgId = req.user.orgId;
@@ -59,6 +72,11 @@ async function getOrg(req, res) {
   }
 }
 
+/**
+ * Function to get the name of the supervisor of the current user
+ * @param {object} req
+ * @param {object} res
+ */
 async function getSupervisor(req, res) {
   try{
     const reportingId = req.user.reporting;
@@ -71,6 +89,11 @@ async function getSupervisor(req, res) {
   }
 }
 
+/**
+ * Function to create a new Admin
+ * @param {object} req - req body should contain name, email, username and password of the object
+ * @param {object} res 
+ */
 async function createAdmin(req, res) {
   if (!req.session.level || req.session.level !== "Super Admin")
     res.send({
@@ -127,6 +150,11 @@ async function createAdmin(req, res) {
   }
 }
 
+/**
+ * Function to create a new organization
+ * @param {object} req - req body should contains name and details of the organization
+ * @param {object} res
+ */
 async function createOrg(req, res) {
   try {
     if (!req.session.level || req.session.level !== "Super Admin")
@@ -171,6 +199,11 @@ async function createOrg(req, res) {
   }
 }
 
+/**
+ * Function to get details of all organizations
+ * @param {object} req
+ * @param {object} res
+ */
 function getAllOrganizations(req, res) {
   Org.find()
     .then((orgs) => res.send({ status: "ok", data: orgs }))
@@ -182,6 +215,12 @@ function getAllOrganizations(req, res) {
     );
 }
 
+
+/**
+ * Function to get details of all admins
+ * @param {object} req
+ * @param {object} res
+ */
 function getAllAdmins(req,res){
   User.find({level: "Admin"})
   .then((admins) => res.send({ status: "ok", admins: admins }))
@@ -193,6 +232,11 @@ function getAllAdmins(req,res){
   );
 }
 
+/**
+ * Function to create a new user
+ * @param {object} req - req body should contains name, email, username and password of the user
+ * @param {*} res
+ */
 async function createUser(req, res) {
   try {
     if (!req.session.level || req.session.level !== "Admin")
@@ -252,6 +296,11 @@ async function createUser(req, res) {
   }
 }
 
+/**
+ * Function to delete an organization
+ * @param {object} req - req.params should contain id of the organization to be deleted
+ * @param {object} res
+ */
 async function deleteOrg(req, res){
   try {
     if(!req.params && !req.params.id) {
@@ -265,6 +314,11 @@ async function deleteOrg(req, res){
   }
 }
 
+/**
+ * Function to delete a user
+ * @param {object} req - req.params should contain id of the user to be deleted
+ * @param {object} res
+ */
 async function deleteUser(req, res){
   try {
     if(!req.params && !req.params.id) {
@@ -278,6 +332,11 @@ async function deleteUser(req, res){
   }
 }
 
+/**
+ * Function to log out the user and destroy it's session
+ * @param {object} req 
+ * @param {object} res 
+ */
 function logOut(req, res) {
   try {
     // req.logout(function (err) {

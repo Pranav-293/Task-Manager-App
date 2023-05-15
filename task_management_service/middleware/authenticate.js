@@ -1,3 +1,9 @@
+/**
+  * Function to check if the user is logged in or not
+  * @param {object} req
+  * @param {object} res
+  * @param {function} next - the callback function which will be called if the user is logged in
+  */
 function authenticate(req, res, next) {
     try {
       const session = req.session;

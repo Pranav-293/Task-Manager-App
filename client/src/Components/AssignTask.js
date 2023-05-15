@@ -2,14 +2,26 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { assignTask, getTasksAndUsers } from "../redux/actions/Actions";
 
+/**
+ * Component to assign a new task
+ * @param {boolean} visibility - The component will be visible if set to true, otherwise hidden
+ * @param {function} setVisibility - The function to change the value of visibility boolean
+ * @returns A component to assign a new task
+ */
 function AssignTask({ visibility, setVisibility }) {
+
   const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [userId, setUserId] = useState("");
   const [message, setMessage] = useState("");
   const adminId = useSelector(state => state.authReducer.userId);
   const AllUsers = useSelector(state => state.taskReducer.allUsers).filter(user => user.reporting===adminId);
+
+  /**
+   * Function to assign the new task
+   */
   async function handleAdd() {
     if (name === "" || details === "" ) {
       setMessage("Please fill the inputs");
@@ -30,6 +42,7 @@ function AssignTask({ visibility, setVisibility }) {
       }
     }
   }
+  
   if (visibility) {
     return (
       <div className="AddOrg">

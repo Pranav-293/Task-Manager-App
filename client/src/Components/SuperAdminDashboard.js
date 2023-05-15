@@ -7,9 +7,17 @@ import Admins from "./Admins";
 import { useDispatch } from "react-redux";
 import { getOrgsAndAdmins } from "../redux/actions/Actions";
 
+/**
+ * Super Admin Component
+ * @returns {Component} - Component to see and manage Admins and Organizations
+ */
 function SuperAdminDashboard() {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // If the user is not logged in redirect to login page
+  // else fetch all organizations and admins
   useEffect(() => {
     fetch("/auth-api/isAuthenticated").then((res) => {
       res.json().then((data) => {
@@ -20,6 +28,7 @@ function SuperAdminDashboard() {
     });
     dispatch(getOrgsAndAdmins());
   },[]);
+
   return (
     <div className="Home">
       <div className="HomeContainer">

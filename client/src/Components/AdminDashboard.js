@@ -6,9 +6,17 @@ import AdminSideBar from "./AdminSideBar";
 import { getTasksAndUsers } from "../redux/actions/Actions";
 import { useDispatch } from "react-redux";
 import AssignedTasksDashboard from "./AssignedTasksDashboard";
+
+/**
+ * Admin Dashboard Component
+ * @returns {Component} - Admin Dashboard where he can see and manage all the users and their tasks
+ */
 function AdminDashboard() {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  //If the user is not logged in redirect it to the login page
   useEffect(() => {
     fetch("/auth-api/isAuthenticated").then((res) => {
       res.json().then((data) => {
@@ -20,6 +28,7 @@ function AdminDashboard() {
       });
     });
   });
+  
   return (
     <div className="Home">
       <div className="HomeContainer">

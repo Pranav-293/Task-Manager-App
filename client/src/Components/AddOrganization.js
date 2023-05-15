@@ -2,14 +2,28 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addOrganization } from "../redux/actions/Actions";
 
+/**
+ * Component to add a new organization
+ * @param {boolean} visibility - The component will be visible if set to true, otherwise hidden
+ * @param {function} setVisibility - The function to change the value of visibility boolean
+ * @returns A component to add a new organization
+ */
 function AddOrganization({ visibility, setVisibility }) {
+
+  // Sets the error message to empty on change of name or details field
+  useEffect(() => {
+    setMessage("");
+  },[name, details]);
+
   const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [message, setMessage] = useState("");
-  useEffect(() => {
-    setMessage("");
-  },[name, details])
+
+  /**
+   * Function to add a new organization
+   */
   async function handleAdd() {
     if (name.trim() === "" || details.trim() === "") {
       setMessage("Please fill the inputs");
@@ -25,6 +39,7 @@ function AddOrganization({ visibility, setVisibility }) {
       }
     }
   }
+
   if (visibility) {
     return (
       <div className="AddOrg">

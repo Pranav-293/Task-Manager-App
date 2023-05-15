@@ -4,6 +4,11 @@ import {
   SET_TASKS_AND_USERS,
 } from "./ActionTypes";
 
+/**
+ * Action creator for setting user data in redux
+ * @param {object} user 
+ * @returns an action of type SET_USER
+ */
 export const setUser = (user) => {
   return {
     type: SET_USER,
@@ -13,6 +18,12 @@ export const setUser = (user) => {
   };
 };
 
+/**
+ * Action creator for creating an action to set organizations and admins data in redux
+ * @param {object} orgsData 
+ * @param {object} adminsData 
+ * @returns action of type SET_ORGS_AND_ADMINS
+ */
 export const setOrgsAndAdmins = (orgsData, adminsData) => {
   return {
     type: SET_ORGS_AND_ADMINS,
@@ -23,6 +34,12 @@ export const setOrgsAndAdmins = (orgsData, adminsData) => {
   };
 };
 
+/**
+ * Action creator for creating an action to set tasks and users data in redux
+ * @param {object} tasks 
+ * @param {object} users 
+ * @returns - action of type SET_TASKS_AND_USERS
+ */
 export const setTasksAndUsers = (tasks, users) => {
   return {
     type: SET_TASKS_AND_USERS,
@@ -33,6 +50,12 @@ export const setTasksAndUsers = (tasks, users) => {
   };
 };
 
+/**
+ * Function to add a new organization in the database
+ * @param {string} name
+ * @param {string} details
+ * @returns {object} response from the database
+ */
 export const addOrganization = (name, details) => {
   return async function (dispatch) {
     const res = await fetch("/auth-api/organization", {
@@ -46,6 +69,15 @@ export const addOrganization = (name, details) => {
   };
 };
 
+/**
+ * Function to add a new admin in the database
+ * @param {string} name
+ * @param {string} email
+ * @param {string} username
+ * @param {string} password
+ * @param {string} orgId
+ * @returns {object} response from the database
+ */
 export const addAdmin = (name, email, username, password, orgId) => {
   return async function () {
     const res = await fetch("/auth-api/admin", {
@@ -64,6 +96,14 @@ export const addAdmin = (name, email, username, password, orgId) => {
   };
 };
 
+/**
+ * Function to add a new user in the database
+ * @param {string} name 
+ * @param {string} email 
+ * @param {string} username 
+ * @param {string} password 
+ * @returns {object} response from the database
+ */
 export const addUser = (name, email, username, password) => {
   return async function () {
     const res = await fetch("/auth-api/user", {
@@ -81,6 +121,10 @@ export const addUser = (name, email, username, password) => {
   };
 };
 
+/**
+ * Function to delete an organization
+ * @param {string} id - id of the organization
+ */
 export const deleteOrganization = (id) => {
   return async function (dispatch) {
     const res = await fetch(`/auth-api/organization/${id}`, {
@@ -95,6 +139,11 @@ export const deleteOrganization = (id) => {
   };
 };
 
+/**
+ * Function to delete a task
+ * @param {string} id - id of the task
+ * @returns {object} response
+ */
 export const deleteTask = (id) => {
   return async function(){
     const res = await fetch(`/task-api/task/${id}`, {
@@ -146,6 +195,9 @@ export const deleteUser = (id) => {
   };
 };
 
+/**
+ * Function to set user details in redux store
+ */
 export const getUser = () => {
   return async function (dispatch) {
     try {
@@ -163,6 +215,9 @@ export const getUser = () => {
 };
 
 
+/**
+ * Function to fetch organizations and admins data and set that in redux store
+ */
 export const getOrgsAndAdmins = () => {
   return async function (dispatch) {
     try {
@@ -183,6 +238,9 @@ export const getOrgsAndAdmins = () => {
   };
 };
 
+/**
+ * Function to fetch tasks and users data and set that in redux store
+ */
 export const getTasksAndUsers = () => {
   return async function (dispatch) {
     try {
@@ -203,6 +261,13 @@ export const getTasksAndUsers = () => {
   };
 };
 
+/**
+ * Function to assign a new task
+ * @param {string} name name of the task
+ * @param {string} details details of the task
+ * @param {string} userId - id of the user to which task is assigned
+ * @returns {object} response
+ */
 export const assignTask = (name, details, userId = "") => {
   return async function (dispatch) {
     const res = await fetch("/task-api/task", {
@@ -215,6 +280,10 @@ export const assignTask = (name, details, userId = "") => {
   };
 };
 
+/**
+ * Function to get organization of the current user
+ * @returns {string} name of the organization
+ */
 async function getOrganization() {
   try {
     const res = await fetch("/auth-api/organization");
@@ -225,6 +294,10 @@ async function getOrganization() {
   }
 }
 
+/**
+ * Function to get the name of the current supervisor
+ * @returns supervisor
+ */
 async function getSupervisor() {
   try {
     const res = await fetch("/auth-api/supervisor");
@@ -235,6 +308,11 @@ async function getSupervisor() {
   }
 }
 
+/**
+ * Function to mark a task inProgress
+ * @param {string} id - id of the task
+ * @returns {object} response
+ */
 export const markInProgress = (id) => {
   return async function(){
     try {
@@ -249,6 +327,11 @@ export const markInProgress = (id) => {
   }
 };
 
+/**
+ * Function to mark a task complete
+ * @param {string} id - id of the task
+ * @returns {object} response
+ */
 export const completeTask = (id) => {
   return async function() {
     try {
@@ -264,6 +347,11 @@ export const completeTask = (id) => {
   
 };
 
+/**
+ * Function to update the details of a task
+ * @param {string} id - id of the task
+ * @returns {object} response
+ */
 export const updateTask = (id, detail) => {
   return async function() {
     try {

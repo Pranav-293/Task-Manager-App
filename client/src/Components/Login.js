@@ -1,12 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Login Component
+ */
 function Login() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+
+  /**
+   * Function to login the user
+   */
   async function handleLogin() {
     try {
       const res = await fetch("/auth-api/login", {
@@ -26,6 +34,7 @@ function Login() {
       console.log(e);
     }
   }
+
   return (
     <div className="loginPage">
       <div className="login">
