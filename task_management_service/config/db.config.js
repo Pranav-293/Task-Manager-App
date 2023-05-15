@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Connection details
 const username = "";
 const password = "";
-const URL = "";
+const URL = "mongodb+srv://Pranav:Pranav1234@cluster0.w6wmya9.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose.connect(URL).catch((err) => {console.log(err.message);});
 

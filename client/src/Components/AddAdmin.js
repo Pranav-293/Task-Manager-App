@@ -10,11 +10,6 @@ import { addAdmin, getOrgsAndAdmins } from "../redux/actions/Actions";
  */
 function AddAdmin({ visibility, setVisibility }) {
 
-  // Sets the error message to empty string on change of name, email, username or password input fields
-  useEffect(() => {
-    setMessage("");
-  }, [name, email, username, password]);
-
   const dispatch = useDispatch();
 
   // all organizations created by the super admin
@@ -26,6 +21,11 @@ function AddAdmin({ visibility, setVisibility }) {
   const [password, setPassword] = useState("");
   const [orgId, setOrgId] = useState("");
   const [message, setMessage] = useState();
+
+  // Sets the error message to empty string on change of name, email, username or password input fields
+  useEffect(() => {
+    setMessage("");
+  }, [name, email, username, password]);
 
   /**
    * Function to check if the entered email is a valid email of not

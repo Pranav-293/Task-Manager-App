@@ -10,16 +10,17 @@ import { addOrganization } from "../redux/actions/Actions";
  */
 function AddOrganization({ visibility, setVisibility }) {
 
-  // Sets the error message to empty on change of name or details field
-  useEffect(() => {
-    setMessage("");
-  },[name, details]);
-
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [message, setMessage] = useState("");
+
+  // Sets the error message to empty on change of name or details field
+  useEffect(() => {
+    setMessage("");
+  },[name, details]);
+
 
   /**
    * Function to add a new organization

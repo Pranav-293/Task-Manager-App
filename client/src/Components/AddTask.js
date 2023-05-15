@@ -10,14 +10,14 @@ import { assignTask, getTasksAndUsers } from "../redux/actions/Actions";
  */
 function AddTask({ visibility, setVisibility }) {
 
-  // Sets the error message to empty on change of name or details field
-  useEffect(() => {
-    setMessage("");
-  },[name,detail]);
-
   const [name, setName] = useState("");
   const [detail, setDetail] = useState("");
   const [message, setMessage] = useState("");
+
+   // Sets the error message to empty on change of name or details field
+   useEffect(() => {
+    setMessage("");
+  },[name,detail]);
 
   const dispatch = useDispatch();
 

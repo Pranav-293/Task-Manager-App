@@ -12,16 +12,16 @@ function AddUser({ visibility, setVisibility }) {
 
   const dispatch = useDispatch();
 
-  // Sets the error message to empty on change of name, email, username or password field
-  useEffect(() => {
-    setMessage("");
-  },[name,email,username,password]);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState();
+
+  // Sets the error message to empty on change of name, email, username or password field
+  useEffect(() => {
+    setMessage("");
+  },[name,email,username,password]);
 
   /**
    * Function to check if the entered email is a valid email of not
