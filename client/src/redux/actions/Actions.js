@@ -2,6 +2,7 @@ import {
   SET_USER,
   SET_ORGS_AND_ADMINS,
   SET_TASKS_AND_USERS,
+  SET_NODES_AND_LINKS,
 } from "./ActionTypes";
 
 /**
@@ -17,6 +18,22 @@ export const setUser = (user) => {
     },
   };
 };
+
+/**
+ * Set nodes and links in the redux store
+ * @param {object} nodes
+ * @param {object} links
+ * @returns action creator of type SET_NODES_AND_LINKS
+ */
+export const setNodesAndLinks = (nodes, links) => {
+  return {
+    type: SET_NODES_AND_LINKS,
+    payload: {
+      nodes ,
+      links
+    }
+  }
+}
 
 /**
  * Action creator for creating an action to set organizations and admins data in redux
@@ -41,11 +58,31 @@ export const setOrgsAndAdmins = (orgsData, adminsData) => {
  * @returns - action of type SET_TASKS_AND_USERS
  */
 export const setTasksAndUsers = (tasks, users) => {
+  const nodes = users.map(user => {
+    return {
+        id: user.id,
+        label: user.name,
+        labelType:"string"
+    }
+});
+const links = [];
+    for(let i = 0; i < users.length; i++){
+      for(let j = 0; j < users.length; j++){
+        if(users[i].id===users[j].reporting){
+          links.push({
+            source: users[i].id,
+            target : users[j].id,
+          })
+        }
+      }
+    }
   return {
     type: SET_TASKS_AND_USERS,
     payload: {
       tasks,
       users,
+      nodes,
+      links,
     },
   };
 };

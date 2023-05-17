@@ -87,9 +87,6 @@ function createTask(req, res) {
  */
 async function getTasks(req, res) {
   try {
-    if (req.session.level === "Super Admin") {
-      throw new Error("You are a Super Admin");
-    }
       const tasks = await Tasks.find().catch((e) => {
         throw e;
       });
@@ -188,7 +185,7 @@ function markComplete(req, res) {
  */
 async function getAllUsers(req, res) {
   try {
-    const users = await Users.find({level: "User"}).catch(
+    const users = await Users.find().catch(
       (e) => {
         throw e;
       }

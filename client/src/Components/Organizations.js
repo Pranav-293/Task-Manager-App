@@ -46,7 +46,7 @@ function Organizations() {
                     onClick={() => dispatch(deleteOrganization(org.id))}
                     className="deleteButton"
                   >
-                    <FontAwesomeIcon icon={faTrash} /> Delete
+                    <FontAwesomeIcon  icon={faTrash} /> Delete
                   </button>
                 </div>
               </div>

@@ -61,7 +61,7 @@ function Admins() {
                   onClick={() => dispatch(deleteAdmin(admin.id))}
                   className="deleteButton"
                 >
-                  <FontAwesomeIcon icon={faTrash} /> Delete
+                  <FontAwesomeIcon className="icon" icon={faTrash} /> Delete
                 </button>
               </div>
             </div>

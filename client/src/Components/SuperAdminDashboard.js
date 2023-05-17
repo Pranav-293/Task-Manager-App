@@ -5,7 +5,8 @@ import SuperAdminSidebar from "./SuperAdminSidebar";
 import Organizations from "./Organizations";
 import Admins from "./Admins";
 import { useDispatch } from "react-redux";
-import { getOrgsAndAdmins } from "../redux/actions/Actions";
+import { getOrgsAndAdmins, getTasksAndUsers } from "../redux/actions/Actions";
+import OrganizationTree from "./OrganizationTree";
 
 /**
  * Super Admin Component
@@ -27,6 +28,7 @@ function SuperAdminDashboard() {
       });
     });
     dispatch(getOrgsAndAdmins());
+    dispatch(getTasksAndUsers());
   },[]);
 
   return (
@@ -39,6 +41,10 @@ function SuperAdminDashboard() {
             <Route
               path="/organizations"
               element={<Organizations></Organizations>}
+            ></Route>
+            <Route
+              path="/organization-tree"
+              element={<OrganizationTree></OrganizationTree>}
             ></Route>
           </Routes>
         </div>

@@ -1,9 +1,11 @@
-import { SET_TASKS_AND_USERS } from "../actions/ActionTypes";
+import { SET_TASKS_AND_USERS, SET_NODES_AND_LINKS } from "../actions/ActionTypes";
 
 //Initial State
 const initialState = {
     allUsers:[],
     allTasks:[],
+    allNodes:[],
+    allLinks:[],
   };
 
   //Task Reducer
@@ -13,8 +15,17 @@ const initialState = {
         return{
           ...state,
           allUsers : action.payload.users,
-          allTasks : action.payload.tasks
+          allTasks : action.payload.tasks,
+          allNodes: action.payload.nodes,
+          allLinks: action.payload.links,
     };
+
+    case SET_NODES_AND_LINKS:
+      return{
+        ...state,
+        allNodes: action.payload.nodes,
+        allLinks: action.payload.links,
+      };
 
         default:
             return state;

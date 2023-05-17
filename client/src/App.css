@@ -672,3 +672,19 @@ padding: 4px;
 .AssignedTasksHome{
   width: 100%;
 }
+.nodes {
+  fill: #9921e8;
+}
+.nodes text {
+  fill: white;
+}
+
+
+.Tree path {
+  stroke: black;
+  fill: black;
+  stroke-width: 1.5px;
+}
+.Tree{
+  width: 100%;
+}
